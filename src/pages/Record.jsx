@@ -1,18 +1,46 @@
-function Record() {
+import { useNavigate } from "react-router-dom";
+
+function Record({
+  time,
+  contents,
+  setContents,
+  star,
+  setStar,
+  records,
+  setRecords,
+}) {
+  const navigate = useNavigate();
+
+  function onClickSave() {
+    setRecords([...records, { time, contents, star }]);
+    navigate("/history");
+  }
+
+  const formatTime = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  };
+
   return (
     <div>
       <h1>学習記録入力</h1>
-      <p>学習時間：00:00:00</p>
-      <textarea placeholder="学習内容を入力" />
+      <p>学習時間：{formatTime(time)}</p>
+      <textarea
+        value={contents}
+        onChange={(e) => setContents(e.target.value)}
+        placeholder="学習内容を入力"
+      />
       <p>定着度</p>
-      <button>★</button>
-      <button>★</button>
-      <button>★</button>
-      <button>★</button>
-      <button>★</button>
-      <button>保存</button>
+      {[1, 2, 3, 4, 5].map((num) => (
+        <button key={num} onClick={() => setStar(num)}>
+          {num <= star ? "★" : "⭐︎"}
+        </button>
+      ))}
+      <button onClick={onClickSave}>保存</button>
     </div>
-  )
+  );
 }
 
-export default Record
+export default Record;
