@@ -4,6 +4,7 @@ function Start({ title, setTitle, genre, setGenre }) {
   const navigate = useNavigate();
 
   function handleClick() {
+    if (title === "") return;
     navigate("/timer");
   }
 
