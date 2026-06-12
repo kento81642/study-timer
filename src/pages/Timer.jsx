@@ -21,7 +21,7 @@ function Timer({ time, setTime }) {
   };
 
   return (
-    <div>
+    <div className="page">
       <h1>学習中</h1>
       <p>{formatTime(time)}</p>
       <button onClick={() => setIsRunning(!isRunning)}>

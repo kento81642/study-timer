@@ -8,7 +8,7 @@ function Start({ title, setTitle, genre, setGenre }) {
   }
 
   return (
-    <div>
+    <div className="page">
       <h1>学習開始</h1>
       <input
         value={title}

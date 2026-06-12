@@ -4,6 +4,7 @@ import Start from "./pages/Start";
 import Timer from "./pages/Timer";
 import Record from "./pages/Record";
 import History from "./pages/History";
+import "./App.css";
 
 function App() {
   const [title, setTitle] = useState("");

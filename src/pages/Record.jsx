@@ -24,7 +24,7 @@ function Record({
   };
 
   return (
-    <div>
+    <div className="page">
       <h1>学習記録入力</h1>
       <p>学習時間：{formatTime(time)}</p>
       <textarea

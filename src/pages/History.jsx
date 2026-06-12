@@ -14,7 +14,7 @@ function History({ records }) {
   }));
 
   return (
-    <div>
+    <div className="page">
       <h1>学習記録一覧</h1>
       {records.length === 0 ? (
         <p>記録がありません</p>
