@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 
-function History({ records }) {
+function History({ records, setRecords }) {
   const formatTime = (seconds) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -12,6 +12,10 @@ function History({ records }) {
     name: `${index + 1}回目`,
     分: Math.floor(record.time / 60),
   }));
+
+  const onClickDelete = (index) => {
+    setRecords(records.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="page">
@@ -34,6 +38,13 @@ function History({ records }) {
                 <p>時間：{formatTime(record.time)}</p>
                 <p>内容：{record.contents}</p>
                 <p>定着度:{record.star}★</p>
+                <button
+                  onClick={() => {
+                    onClickDelete(index);
+                  }}
+                >
+                  削除
+                </button>
               </li>
             ))}
           </ul>

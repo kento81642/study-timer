@@ -46,7 +46,10 @@ function App() {
             />
           }
         />
-        <Route path="/history" element={<History records={records} />} />
+        <Route
+          path="/history"
+          element={<History records={records} setRecords={setRecords} />}
+        />
       </Routes>
     </BrowserRouter>
   );
