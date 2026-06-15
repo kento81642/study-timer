@@ -51,6 +51,21 @@ const record2: StudyRecord2 = {
     star: 5,
 }
 
+function getFirst<T>(array: T[]): T {
+    return array[0];
+}
+
+const firstNumber = getFirst<number>([1, 2, 3]);
+const firstString = getFirst<string>(["React", "TypeScript", "Next.js"]);
+
+const printStar = (star: number | null): void => {
+    if (star === null) {
+        console.log("未評価");
+        return;
+    }
+    console.log(`定着度:${star}★`);
+}
+
 // console.log(name);
 // console.log(age);
 // console.log(isStudent);
@@ -63,5 +78,11 @@ const record2: StudyRecord2 = {
 // startProps.setTitle("TypeScript学習");
 // startProps.setGenre("フロントエンド");
 
-console.log(record2.title);
-console.log(record2.memo);
+// console.log(record2.title);
+// console.log(record2.memo);
+
+// console.log(firstNumber);
+// console.log(firstString);
+
+printStar(5);
+printStar(null);
