@@ -1,6 +1,10 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import { useState } from "react";
 
 function History({ records, setRecords }) {
+  const [editIndex, setEditIndex] = useState(null);
+  const [editContents, setEditContents] = useState("");
+
   const formatTime = (seconds) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -15,6 +19,22 @@ function History({ records, setRecords }) {
 
   const onClickDelete = (index) => {
     setRecords(records.filter((_, i) => i !== index));
+  };
+
+  const onClickEdit = (index) => {
+    setEditIndex(index);
+    setEditContents(records[index].contents);
+  };
+
+  const onClickSave = (index) => {
+    const newRecords = records.map((record, i) => {
+      if (i === index) {
+        return { ...record, contents: editContents };
+      }
+      return record;
+    });
+    setRecords(newRecords);
+    setEditIndex(null);
   };
 
   return (
@@ -35,16 +55,25 @@ function History({ records, setRecords }) {
           <ul>
             {records.map((record, index) => (
               <li key={index}>
+                <p>学習ジャンル：{record.genre}</p>
+                <p>学習タイトル：{record.title}</p>
                 <p>時間：{formatTime(record.time)}</p>
-                <p>内容：{record.contents}</p>
-                <p>定着度:{record.star}★</p>
-                <button
-                  onClick={() => {
-                    onClickDelete(index);
-                  }}
-                >
-                  削除
-                </button>
+                {editIndex === index ? (
+                  <>
+                    <input
+                      value={editContents}
+                      onChange={(e) => setEditContents(e.target.value)}
+                    />
+                    <button onClick={() => onClickSave(index)}>保存</button>
+                  </>
+                ) : (
+                  <>
+                    <p>内容：{record.contents}</p>
+                    <p>定着度：{record.star}★</p>
+                    <button onClick={() => onClickDelete(index)}>削除</button>
+                    <button onClick={() => onClickEdit(index)}>編集</button>
+                  </>
+                )}
               </li>
             ))}
           </ul>

@@ -36,6 +36,8 @@ function App() {
           path="/record"
           element={
             <Record
+              title={title}
+              genre={genre}
               time={time}
               contents={contents}
               setContents={setContents}

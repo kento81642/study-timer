@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 function Record({
+  title,
+  genre,
   time,
   contents,
   setContents,
@@ -12,7 +14,9 @@ function Record({
   const navigate = useNavigate();
 
   function onClickSave() {
-    setRecords([...records, { time, contents, star }]);
+    setRecords([...records, { time, contents, star, title, genre }]);
+    setContents("");
+    setStar(0);
     navigate("/history");
   }
 
