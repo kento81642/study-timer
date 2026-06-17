@@ -5,6 +5,7 @@ import Start from "./pages-tsx/Start";
 import Timer from "./pages-tsx/Timer";
 import Record from "./pages-tsx/Record";
 import History from "./pages-tsx/History";
+import Login from "./pages-tsx/Login";
 import "./App.css";
 
 type StudyRecord = {
@@ -23,6 +24,17 @@ function App() {
   const [contents, setContents] = useState("");
   const [star, setStar] = useState(0);
   const [records, setRecords] = useState<StudyRecord[]>([]);
+  const [user, setUser] = useState<null | { id: string }>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+  }, []);
 
   useEffect(() => {
     supabase
@@ -33,6 +45,7 @@ function App() {
       });
   }, []);
 
+  if (!user) return <Login />;
   return (
     <BrowserRouter
       future={{

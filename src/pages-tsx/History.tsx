@@ -27,6 +27,10 @@ function History({ records, setRecords }: Props) {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editContents, setEditContents] = useState<string>("");
 
+  const onClickLogout = async (): Promise<void> => {
+    await supabase.auth.signOut();
+  };
+
   const chartData = records.map((record, index) => ({
     name: `${index + 1}回目`,
     分: Math.floor(record.time / 60),
@@ -64,6 +68,7 @@ function History({ records, setRecords }: Props) {
   return (
     <div className="page">
       <h1>学習記録一覧</h1>
+      <button onClick={onClickLogout}>ログアウト</button>
       {records.length === 0 ? (
         <p>記録がありません</p>
       ) : (
