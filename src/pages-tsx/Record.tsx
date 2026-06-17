@@ -19,6 +19,7 @@ type Props = {
   setStar: (star: number) => void;
   records: StudyRecord[];
   setRecords: (records: StudyRecord[]) => void;
+  userId: string;
 };
 
 function Record({
@@ -31,14 +32,13 @@ function Record({
   setStar,
   records,
   setRecords,
+  userId,
 }: Props) {
   const navigate = useNavigate();
 
   async function onClickSave() {
-    const newRecord = { time, contents, star, title, genre };
-
+    const newRecord = { time, contents, star, title, genre, user_id: userId };
     await supabase.from("records").insert(newRecord);
-
     setRecords([...records, newRecord]);
     setContents("");
     setStar(0);

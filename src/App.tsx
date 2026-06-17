@@ -10,6 +10,7 @@ import "./App.css";
 
 type StudyRecord = {
   id?: number;
+  user_id?: string;
   title: string;
   genre: string;
   time: number;
@@ -28,21 +29,22 @@ function App() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
+      const sessionUser = data.session?.user ?? null;
+      setUser(sessionUser);
+      if (sessionUser) {
+        supabase
+          .from("records")
+          .select("*")
+          .eq("user_id", sessionUser.id)
+          .then(({ data }) => {
+            if (data) setRecords(data);
+          });
+      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
-  }, []);
-
-  useEffect(() => {
-    supabase
-      .from("records")
-      .select("*")
-      .then(({ data }) => {
-        if (data) setRecords(data);
-      });
   }, []);
 
   if (!user) return <Login />;
@@ -82,6 +84,7 @@ function App() {
               setStar={setStar}
               records={records}
               setRecords={setRecords}
+              userId={user.id}
             />
           }
         />
