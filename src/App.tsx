@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "./supabase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Start from "./pages-tsx/Start";
 import Timer from "./pages-tsx/Timer";
@@ -7,12 +8,13 @@ import History from "./pages-tsx/History";
 import "./App.css";
 
 type StudyRecord = {
-    title: string;
-    genre: string;
-    time: number;
-    contents: string;
-    star: number;
-}
+  id?: number;
+  title: string;
+  genre: string;
+  time: number;
+  contents: string;
+  star: number;
+};
 
 function App() {
   const [title, setTitle] = useState("");
@@ -22,8 +24,22 @@ function App() {
   const [star, setStar] = useState(0);
   const [records, setRecords] = useState<StudyRecord[]>([]);
 
+  useEffect(() => {
+    supabase
+      .from("records")
+      .select("*")
+      .then(({ data }) => {
+        if (data) setRecords(data);
+      });
+  }, []);
+
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <Routes>
         <Route
           path="/"

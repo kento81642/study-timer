@@ -1,21 +1,23 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useState } from "react";
+import { supabase } from "../supabase";
 
 type StudyRecord = {
-    title: string;
-    genre: string;
-    time: number;
-    contents: string;
-    star: number;
-}
+  id?: number;
+  title: string;
+  genre: string;
+  time: number;
+  contents: string;
+  star: number;
+};
 
 type Props = {
-    records: StudyRecord[];
-    setRecords: (records: StudyRecord[]) => void;
-}
+  records: StudyRecord[];
+  setRecords: (records: StudyRecord[]) => void;
+};
 
-function History ({records, setRecords } : Props) {
-    const formatTime = (seconds: number): string => {
+function History({ records, setRecords }: Props) {
+  const formatTime = (seconds: number): string => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
@@ -30,7 +32,9 @@ function History ({records, setRecords } : Props) {
     分: Math.floor(record.time / 60),
   }));
 
-  const onClickDelete = (index: number): void => {
+  const onClickDelete = async (index: number): Promise<void> => {
+    const target = records[index];
+    await supabase.from("records").delete().eq("id", target.id);
     setRecords(records.filter((_, i) => i !== index));
   };
 
@@ -39,7 +43,14 @@ function History ({records, setRecords } : Props) {
     setEditContents(records[index].contents);
   };
 
-  const onClickSave = (index: number): void => {
+  const onClickSave = async (index: number): Promise<void> => {
+    const target = records[index];
+
+    await supabase
+      .from("records")
+      .update({ contents: editContents })
+      .eq("id", target.id);
+
     const newRecords = records.map((record, i) => {
       if (i === index) {
         return { ...record, contents: editContents };
@@ -97,4 +108,3 @@ function History ({records, setRecords } : Props) {
 }
 
 export default History;
-
