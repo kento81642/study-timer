@@ -48,6 +48,9 @@ function Login() {
             新規登録
           </button>
         </div>
+        <p className="text-xs text-gray-500 mt-4 text-center">
+          デモ用：guest@example.com / guest1234
+        </p>
       </div>
     </div>
   );
