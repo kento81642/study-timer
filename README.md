@@ -2,7 +2,7 @@
 
 学習時間をタイマーで計測し、内容・定着度を記録・管理できるWebアプリです。
 
-**本番URL：** https://study-timer-2ms684chv-kento81642s-projects.vercel.app
+**本番URL：** https://study-timer-bay.vercel.app
 
 ---
 
