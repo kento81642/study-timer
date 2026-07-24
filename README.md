@@ -5,10 +5,11 @@
 **本番URL：** https://study-timer-bay.vercel.app
 
 ---
-## 画面
+## 📸 画面
 
-![学習タイトル記載 画面](docs/record-input.png)
-![学習内容記録 画面](docs/result-graph.png)
+![学習結果のグラフ](docs/result-graph.png)
+
+![学習内容の記録](docs/record-input.png)
 
 記録した学習時間を Recharts で棒グラフ化。ユーザーごとにデータを分離し、ログインユーザー自身の記録だけを表示します。
 
